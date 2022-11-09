@@ -1,11 +1,12 @@
 #include <iostream>
 #include <vector>
+#include "concerts.hpp"
 
-int max(int a, int b, int c) { return std::max(std::max(a, b), c); }
+double max(double a, double b, double c) { return std::max(std::max(a, b), c); }
 
-std::vector<int> maxCrossingSum(std::vector<int> arr, int l, int m, int h) {
-    int sum = 0;
-    int left_sum = INT_MIN;
+Concerts maxCrossingSum(std::vector<double> arr, int l, int m, int h) {
+    double sum = 0;
+    double left_sum = INT_MIN;
     int left_index = m;
     for (int i = m; i >= l; i--) {
         sum = sum + arr[i];
@@ -16,7 +17,7 @@ std::vector<int> maxCrossingSum(std::vector<int> arr, int l, int m, int h) {
     }
 
     sum = 0;
-    int right_sum = INT_MIN;
+    double right_sum = INT_MIN;
     int right_index = m;
     for (int i = m; i <= h; i++) {
         sum = sum + arr[i];
@@ -26,40 +27,40 @@ std::vector<int> maxCrossingSum(std::vector<int> arr, int l, int m, int h) {
         }
     }
 
-    int middle_sum = left_sum + right_sum - arr[m];
-    int bigger = max(middle_sum, left_sum, right_sum);
-    std::vector<int> indexes;
+    double middle_sum = left_sum + right_sum - arr[m];
+    double bigger = max(middle_sum, left_sum, right_sum);
+    Concerts concerts;
     if (bigger == middle_sum) {
-        indexes = { left_index, right_index, middle_sum };
+        concerts = { left_index, right_index, middle_sum };
     } else if (bigger == left_sum) {
-        indexes = { left_index, m, left_sum };
+        concerts = { left_index, m, left_sum };
     } else {
-        indexes = { m , right_index, right_sum };
+        concerts = { m , right_index, right_sum };
     }
-    return indexes;
+    return concerts;
 }
 
-std::vector<int> maxSubArraySum(std::vector<int> arr, int l, int h) {
-    if (l > h) {
-        std::vector<int> indexes = { l, h, INT_MIN };
-        return indexes;
+Concerts maxSubArraySum(std::vector<double> arr, int l, int r) {
+    if (l > r) {
+        Concerts concerts = {l, r, INT_MIN };
+        return concerts;
     }
 
-    if (l == h) {
-        std::vector<int> indexes = { l, h, arr[l] };
-        return indexes;
+    if (l == r) {
+        Concerts concerts = {l, r, arr[l] };
+        return concerts;
     }
 
-    int m = (l + h) / 2;
+    int m = (l + r) / 2;
 
-    std::vector<int> left = maxSubArraySum(arr, l, m - 1);
-    std::vector<int> right = maxSubArraySum(arr, m + 1, h);
-    std::vector<int> middle = maxCrossingSum(arr, l, m, h);
-    int bigger = max(middle[2], left[2], right[2]);
+    Concerts left = maxSubArraySum(arr, l, m - 1);
+    Concerts right = maxSubArraySum(arr, m + 1, r);
+    Concerts middle = maxCrossingSum(arr, l, m, r);
+    double bigger = max(middle.sum, left.sum, right.sum);
 
-    if (bigger == middle[2]) {
+    if (bigger == middle.sum) {
         return middle;
-    } else if (bigger == left[2]) {
+    } else if (bigger == left.sum) {
         return left;
     } else {
         return right;
@@ -71,19 +72,19 @@ int main() {
 
     std::cin >> a >> s;
     while (a > 0 && s > 0) {
-        std::vector<int> arr = std::vector<int>(s, 0);
+        std::vector<double> arr = std::vector<double>(s, 0);
         for (int i = 0; i < a; ++i) {
             for (int j = 0; j < s; ++j) {
-                int num = 0;
+                double num = 0;
                 std::cin >> num;
                 arr[j] += num;
             }
         }
 
-        std::vector<int> max_sum = maxSubArraySum(arr, 0, (arr.size()) - 1);
-        printf("Left index is %d\n", max_sum[0] + 1);
-        printf("Right index is %d\n", max_sum[1] + 1);
-        printf("Maximum contiguous sum is %d\n", max_sum[2]);
+        Concerts max_sum = maxSubArraySum(arr, 0, (arr.size()) - 1);
+        printf("Left index is %d\n", max_sum.left_index + 1);
+        printf("Right index is %d\n", max_sum.right_index + 1);
+        printf("Maximum contiguous sum is %d\n", max_sum.sum);
         std::cin >> a >> s;
     }
 
