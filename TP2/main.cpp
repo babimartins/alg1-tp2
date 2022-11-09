@@ -68,24 +68,22 @@ Concerts maxSubArraySum(std::vector<double> arr, int l, int r) {
 }
 
 int main() {
-    int a = 0, s = 0;
+    int friends_num = 0, concerts_num = 0;
 
-    std::cin >> a >> s;
-    while (a > 0 && s > 0) {
-        std::vector<double> arr = std::vector<double>(s, 0);
-        for (int i = 0; i < a; ++i) {
-            for (int j = 0; j < s; ++j) {
-                double num = 0;
-                std::cin >> num;
-                arr[j] += num;
+    std::cin >> friends_num >> concerts_num;
+    while (friends_num > 0 && concerts_num > 0) {
+        std::vector<double> concerts_rates = std::vector<double>(concerts_num, 0);
+        for (int i = 0; i < friends_num; ++i) {
+            for (int j = 0; j < concerts_num; ++j) {
+                double rate = 0;
+                std::cin >> rate;
+                concerts_rates[j] += rate;
             }
         }
 
-        Concerts max_sum = maxSubArraySum(arr, 0, (arr.size()) - 1);
-        printf("Left index is %d\n", max_sum.left_index + 1);
-        printf("Right index is %d\n", max_sum.right_index + 1);
-        printf("Maximum contiguous sum is %d\n", max_sum.sum);
-        std::cin >> a >> s;
+        Concerts max_sum = maxSubArraySum(concerts_rates, 0, (concerts_rates.size()) - 1);
+        std::cout << max_sum.left_index + 1 << " " << max_sum.right_index + 1 << std::endl;
+        std::cin >> friends_num >> concerts_num;
     }
 
     return 0;
