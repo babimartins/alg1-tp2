@@ -84,6 +84,7 @@ int main() {
         printf("Left index is %d\n", max_sum[0] + 1);
         printf("Right index is %d\n", max_sum[1] + 1);
         printf("Maximum contiguous sum is %d\n", max_sum[2]);
+        std::cin >> a >> s;
     }
 
     return 0;
