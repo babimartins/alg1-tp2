@@ -3,7 +3,7 @@
 
 int max(int a, int b, int c) { return std::max(std::max(a, b), c); }
 
-std::vector<int> maxCrossingSum(int arr[], int l, int m, int h) {
+std::vector<int> maxCrossingSum(std::vector<int> arr, int l, int m, int h) {
     int sum = 0;
     int left_sum = INT_MIN;
     int left_index = m;
@@ -39,7 +39,7 @@ std::vector<int> maxCrossingSum(int arr[], int l, int m, int h) {
     return indexes;
 }
 
-std::vector<int> maxSubArraySum(int arr[], int l, int h) {
+std::vector<int> maxSubArraySum(std::vector<int> arr, int l, int h) {
     if (l > h) {
         std::vector<int> indexes = { l, h, INT_MIN };
         return indexes;
@@ -67,12 +67,24 @@ std::vector<int> maxSubArraySum(int arr[], int l, int h) {
 }
 
 int main() {
-    int arr[] = { 1, 9, -4, 5, 8, -2 };
-    int n = sizeof(arr) / sizeof(arr[0]);
-    std::vector<int> max_sum = maxSubArraySum(arr, 0, n - 1);
-    printf("Left index is %d\n", max_sum[0] + 1);
-    printf("Right index is %d\n", max_sum[1] + 1);
-    printf("Maximum contiguous sum is %d\n", max_sum[2]);
+    int a = 0, s = 0;
+
+    std::cin >> a >> s;
+    while (a > 0 && s > 0) {
+        std::vector<int> arr = std::vector<int>(s, 0);
+        for (int i = 0; i < a; ++i) {
+            for (int j = 0; j < s; ++j) {
+                int num = 0;
+                std::cin >> num;
+                arr[j] += num;
+            }
+        }
+
+        std::vector<int> max_sum = maxSubArraySum(arr, 0, (arr.size()) - 1);
+        printf("Left index is %d\n", max_sum[0] + 1);
+        printf("Right index is %d\n", max_sum[1] + 1);
+        printf("Maximum contiguous sum is %d\n", max_sum[2]);
+    }
 
     return 0;
 }
