@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <climits>
 #include "concerts.hpp"
 
 double max(double a, double b, double c) { return std::max(std::max(a, b), c); }

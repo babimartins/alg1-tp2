@@ -5,7 +5,7 @@ CPPFLAGS=-g -Wall
 LDFLAGS=-g
 LDLIBS=
 
-SRCS=main.cpp rock.cpp
+SRCS=main.cpp concerts.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
 
 all: tp02
